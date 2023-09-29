@@ -1,5 +1,6 @@
 package dk.mathiasrossen.newsapp.models
 
+import java.io.Serializable
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -9,8 +10,9 @@ data class Article(
     val description: String?,
     val url: String,
     val urlToImage: String?,
-    val publishedAt: String
-) {
+    val publishedAt: String,
+    val author: String?
+): Serializable {
     val publishedAtFormatted: String
         get() {
             val localDateTime = LocalDateTime.parse(publishedAt, DateTimeFormatter.ISO_DATE_TIME)
@@ -18,5 +20,5 @@ data class Article(
             return localDateTime.format(formatter)
         }
 
-    data class Source(val id: String?, val name: String)
+    data class Source(val id: String?, val name: String): Serializable
 }
