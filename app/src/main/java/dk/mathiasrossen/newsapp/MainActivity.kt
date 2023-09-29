@@ -5,10 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,12 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -76,11 +72,6 @@ class MainActivity : ComponentActivity() {
                             ),
                             scrollBehavior = scrollBehavior
                         )
-                    },
-                    floatingActionButton = {
-                        FloatingActionButton(onClick = { viewModel.getArticles("de") }) {
-                            Icon(Icons.Filled.Add, "Floating Action Button")
-                        }
                     }) { innerPadding ->
                     Surface(
                         modifier = Modifier.padding(innerPadding),
@@ -99,7 +90,7 @@ fun ArticleList(articleResponse: ArticleResponse) {
     LazyColumn(
         modifier = Modifier.padding(horizontal = GapDefault)
     ) {
-        items(articleResponse.articles) { article ->
+        items(articleResponse.activeArticles) { article ->
             NewsArticle(article)
         }
     }
@@ -122,17 +113,24 @@ fun NewsArticle(article: Article) {
             .fillMaxWidth()
             .height(150.dp)
     ) {
-        Row(modifier = Modifier.padding(all = 16.dp)) {
-            AsyncImage(
-                model = article.urlToImage,
-                contentDescription = null,
-                modifier = Modifier
-                    .width(120.dp)
-                    .height(100.dp),
-                contentScale = ContentScale.Fit
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(verticalArrangement = Arrangement.SpaceBetween) {
+        Column(
+            modifier = Modifier
+                .padding(all = 16.dp)
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row {
+                if (article.urlToImage != null) {
+                    AsyncImage(
+                        model = article.urlToImage,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .width(120.dp)
+                            .height(100.dp),
+                        contentScale = ContentScale.Fit
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                }
                 Text(
                     text = article.title,
                     color = MaterialTheme.colorScheme.primary,
@@ -140,12 +138,12 @@ fun NewsArticle(article: Article) {
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f)
                 )
-                Text(
-                    text = article.publishedAt,
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
             }
+            Text(
+                text = article.publishedAtFormatted,
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }

@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ArticleListViewModel : ViewModel() {
-    private val _articles = MutableStateFlow<ArticleResponse>(ArticleResponse("", 0, listOf()))
+    private val _articles = MutableStateFlow(ArticleResponse("", 0, listOf()))
     val articles: StateFlow<ArticleResponse> = _articles.asStateFlow()
 
     fun getArticles(country: String = "us") {

@@ -3,6 +3,10 @@ package dk.mathiasrossen.newsapp.models
 object SampleData {
     val articlesSample = listOf(
         Article(
+            Article.Source(
+                "Meta",
+                "Meta"
+            ),
             "Meta CEO Mark Zuckerberg looks to digital assistants, smart glasses and AI to help metaverse push - CNBC",
             "Meta is rolling out new AI software in addition to its Quest 3 virtual reality headset and latest smart glasses as it tries to move the world to the metaverse.",
             "https://www.cnbc.com/2023/09/27/meta-ceo-zuckerberg-looks-to-digital-assistants-ai-to-push-metaverse.html",
@@ -10,6 +14,10 @@ object SampleData {
             "2023-09-27T19:52:21Z"
         ),
         Article(
+            Article.Source(
+                "Hyundai",
+                "Hyundai"
+            ),
             "In latest recall, Hyundai and Kia ask owners of 3.3 million vehicles to park outside due to risk of fire - CNN",
             "Owners of about 3.3 million Hyundai and Kia cars and SUVs in the United States should avoid parking in or near structures because the vehicles could suddenly catch fire – whether they’re being driven or not, according to an announcement Wednesday from the Nat…",
             "https://www.cnn.com/2023/09/27/business/hyundai-kia-abs-fire-recall/index.html",
