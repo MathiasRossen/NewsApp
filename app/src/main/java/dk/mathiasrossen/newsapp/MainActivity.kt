@@ -42,6 +42,8 @@ import coil.compose.AsyncImage
 import dk.mathiasrossen.newsapp.models.Article
 import dk.mathiasrossen.newsapp.models.ArticleResponse
 import dk.mathiasrossen.newsapp.models.SampleData
+import dk.mathiasrossen.newsapp.pullrefresh.pullRefresh
+import dk.mathiasrossen.newsapp.pullrefresh.rememberPullRefreshState
 import dk.mathiasrossen.newsapp.ui.theme.GapDefault
 import dk.mathiasrossen.newsapp.ui.theme.NewsAppTheme
 import dk.mathiasrossen.newsapp.viewmodels.ArticleListViewModel
@@ -58,7 +60,10 @@ class MainActivity : ComponentActivity() {
             }
         }
         setContent {
+            val refreshing by viewModel.refreshing
             val articleResponse by viewModel.articles.collectAsState()
+            val pullRefreshState =
+                rememberPullRefreshState(refreshing, onRefresh = viewModel::getArticles)
             val scrollBehavior =
                 TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
             NewsAppTheme {
@@ -74,7 +79,9 @@ class MainActivity : ComponentActivity() {
                         )
                     }) { innerPadding ->
                     Surface(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .pullRefresh(pullRefreshState),
                         color = MaterialTheme.colorScheme.background
                     ) {
                         ArticleList(articleResponse)
