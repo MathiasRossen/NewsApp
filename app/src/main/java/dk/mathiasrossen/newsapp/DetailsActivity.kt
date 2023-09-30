@@ -1,5 +1,6 @@
 package dk.mathiasrossen.newsapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -61,7 +63,7 @@ class DetailsActivity : ComponentActivity() {
                         contentScale = ContentScale.Crop
                     )
                     TopAppBar(
-                        title = {},
+                        title = { /* TopAppBar breaks without */ },
                         navigationIcon = {
                             IconButton(onClick = { finish() }) {
                                 Icon(
@@ -92,13 +94,13 @@ fun ArticleDetail(article: Article) {
         Text(
             text = article.title,
             color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.headlineLarge
         )
         article.description?.let { description ->
             Text(
                 text = description,
                 color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyLarge
             )
         }
         Column(horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()) {
@@ -116,7 +118,13 @@ fun ArticleDetail(article: Article) {
             )
         }
         Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
-            Button(onClick = { /*TODO*/ }) {
+            val context = LocalContext.current
+            Button(onClick = {
+                Intent(context, ArticleWebViewActivity::class.java).let { intent ->
+                    intent.putExtra(ARTICLE_URL_KEY, article.url)
+                    context.startActivity(intent)
+                }
+            }) {
                 Text(text = "View full article")
             }
         }
