@@ -15,7 +15,8 @@ class ArticleWebViewActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val url = intent.extras?.getString(ARTICLE_URL_KEY) ?: throw IllegalStateException("No url for webview")
+        val url = intent.extras?.getString(ARTICLE_URL_KEY)
+            ?: throw IllegalStateException("No url for webview")
         val webView = findViewById<WebView>(R.id.news_web_view)
         webView.loadUrl(url)
     }

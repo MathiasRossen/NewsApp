@@ -7,7 +7,6 @@ import dk.mathiasrossen.newsapp.services.newsApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,6 +14,8 @@ import retrofit2.Response
 class ArticleListViewModel : ViewModel() {
     private val _articles = MutableStateFlow(ArticleResponse("", 0, listOf()))
     val articles: StateFlow<ArticleResponse> = _articles.asStateFlow()
+    private val _openNotifcationPermissionDialog = MutableStateFlow(false)
+    val openNotificationPermissionDialog: StateFlow<Boolean> = _openNotifcationPermissionDialog.asStateFlow()
 
     fun getArticles(country: String = "us") {
         newsApiService.getArticles(apiKey, country).enqueue(object : Callback<ArticleResponse> {
@@ -22,7 +23,7 @@ class ArticleListViewModel : ViewModel() {
                 call: Call<ArticleResponse>, response: Response<ArticleResponse>
             ) {
                 response.body()?.let { articleResponse ->
-                    _articles.update { _ -> articleResponse }
+                    _articles.value = articleResponse
                 }
             }
 
@@ -30,5 +31,9 @@ class ArticleListViewModel : ViewModel() {
                 t.printStackTrace()
             }
         })
+    }
+
+    fun changeNotificationPermissionDialogVisibility(open: Boolean) {
+        _openNotifcationPermissionDialog.value = open
     }
 }

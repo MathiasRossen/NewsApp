@@ -15,6 +15,14 @@
         android:theme="@style/Theme.NewsApp"
         tools:targetApi="31">
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_foreground" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@android:color/holo_red_light" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,15 +39,21 @@
             android:name=".DetailsActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NewsApp">
-        </activity>
+            android:theme="@style/Theme.NewsApp" />
 
         <activity
             android:name=".ArticleWebViewActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.NewsApp.WebView">
-        </activity>
+            android:theme="@style/Theme.NewsApp.WebView" />
+
+        <service
+            android:name="dk.mathiasrossen.newsapp.NewsAppFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
