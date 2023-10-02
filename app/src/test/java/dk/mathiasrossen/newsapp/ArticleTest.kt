@@ -1,4 +1,4 @@
-package dk.mathiasrossen.newsapp.unittests
+package dk.mathiasrossen.newsapp
 
 import dk.mathiasrossen.newsapp.models.Article
 import org.junit.Assert.assertEquals
