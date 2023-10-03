@@ -1,6 +1,7 @@
 package dk.mathiasrossen.newsapp
 
 import dk.mathiasrossen.newsapp.models.Article
+import io.mockk.impl.annotations.MockK
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

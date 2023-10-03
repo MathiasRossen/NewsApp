@@ -25,8 +25,9 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dk.mathiasrossen.newsapp.composables.AppLayout
-import dk.mathiasrossen.newsapp.composables.ArticleList
+import dk.mathiasrossen.newsapp.composables.NewsArticleList
 import dk.mathiasrossen.newsapp.composables.NotificationPermissionRequestDialog
+import dk.mathiasrossen.newsapp.services.newsApiService
 import dk.mathiasrossen.newsapp.viewmodels.ArticleListViewModel
 import kotlinx.coroutines.launch
 
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
         val viewModel: ArticleListViewModel by viewModels()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getArticles()
+                viewModel.getArticles(newsApiService)
             }
         }
         askNotificationPermission {
@@ -65,7 +66,7 @@ class MainActivity : ComponentActivity() {
                     scrollBehavior = scrollBehavior
                 )
             }) {
-                ArticleList(articleResponse = articleResponse)
+                NewsArticleList(articleResponse = articleResponse)
             }
 
             when {

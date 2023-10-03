@@ -2,8 +2,8 @@ package dk.mathiasrossen.newsapp.viewmodels
 
 import androidx.lifecycle.ViewModel
 import dk.mathiasrossen.newsapp.models.ArticleResponse
+import dk.mathiasrossen.newsapp.services.NewsApiService
 import dk.mathiasrossen.newsapp.services.apiKey
-import dk.mathiasrossen.newsapp.services.newsApiService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,8 @@ class ArticleListViewModel : ViewModel() {
     private val _openNotifcationPermissionDialog = MutableStateFlow(false)
     val openNotificationPermissionDialog: StateFlow<Boolean> = _openNotifcationPermissionDialog.asStateFlow()
 
-    fun getArticles(country: String = "us") {
+    // Getting the service through params for testing purposes
+    fun getArticles(newsApiService: NewsApiService, country: String = "us") {
         newsApiService.getArticles(apiKey, country).enqueue(object : Callback<ArticleResponse> {
             override fun onResponse(
                 call: Call<ArticleResponse>, response: Response<ArticleResponse>

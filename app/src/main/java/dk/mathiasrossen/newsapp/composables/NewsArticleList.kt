@@ -12,7 +12,7 @@ import dk.mathiasrossen.newsapp.ui.theme.GapDefault
 import dk.mathiasrossen.newsapp.ui.theme.NewsAppTheme
 
 @Composable
-fun ArticleList(articleResponse: ArticleResponse) {
+fun NewsArticleList(articleResponse: ArticleResponse) {
     LazyColumn(
         modifier = Modifier.padding(horizontal = GapDefault)
     ) {
@@ -24,8 +24,8 @@ fun ArticleList(articleResponse: ArticleResponse) {
 
 @Preview
 @Composable
-fun PreviewArticleList() {
+fun PreviewNewsArticleList() {
     NewsAppTheme {
-        ArticleList(SampleData.articleResponseSample)
+        NewsArticleList(SampleData.articleResponseSample)
     }
 }
